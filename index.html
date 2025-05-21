@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Revelação do Bebê</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Sevillana&family=Cookie&family=Rubik+Gemstones&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    .font-sevillana { font-family: 'Sevillana', cursive; }
+    .font-cookie   { font-family: 'Cookie', cursive; }
+    .font-rubik    { font-family: 'Rubik Gemstones', cursive; }
+
+    .bg-tile {
+      background-image: url("image/background.png");
+    }
+
+    .firework {
+      position: absolute;
+      overflow: visible;
+    }
+    .explosion {
+      position: absolute;
+      left: -2px;
+      bottom: 0;
+      width: 4px;
+      height: 80px;
+      transform-origin: 50% 100%;
+    }
+    /* 12 rays at 30° increments */
+    .explosion:nth-child(1)  { transform: rotate(0deg)   translateY(-15px); }
+    .explosion:nth-child(2)  { transform: rotate(30deg)  translateY(-15px); }
+    .explosion:nth-child(3)  { transform: rotate(60deg)  translateY(-15px); }
+    .explosion:nth-child(4)  { transform: rotate(90deg)  translateY(-15px); }
+    .explosion:nth-child(5)  { transform: rotate(120deg) translateY(-15px); }
+    .explosion:nth-child(6)  { transform: rotate(150deg) translateY(-15px); }
+    .explosion:nth-child(7)  { transform: rotate(180deg) translateY(-15px); }
+    .explosion:nth-child(8)  { transform: rotate(210deg) translateY(-15px); }
+    .explosion:nth-child(9)  { transform: rotate(240deg) translateY(-15px); }
+    .explosion:nth-child(10) { transform: rotate(270deg) translateY(-15px); }
+    .explosion:nth-child(11) { transform: rotate(300deg) translateY(-15px); }
+    .explosion:nth-child(12) { transform: rotate(330deg) translateY(-15px); }
+
+    .explosion::before {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; top: 100%;
+      height: 40px;
+      background-color: #1a8db4;
+      animation: explosion 2s ease-in-out infinite;
+    }
+
+    @keyframes explosion {
+      0%   { top: 100%; }
+      33%,100% { top: -50%; }
+    }
+
+    /* Individual delays & positions */
+    #firework1  { left: 50%; top: 50%;  transform: scale(1); }
+    #firework2  { left: 40%; top: 45%;  transform: scale(.7); }
+    #firework2  .explosion::before { animation-delay: .6s; }
+    #firework3  { left: 60%; top: 65%;  transform: scale(.4); }
+    #firework3  .explosion::before { animation-delay: .4s; }
+    #firework4  { left: 40%; top: 65%;  transform: scale(.5); }
+    #firework4  .explosion::before { animation-delay: .2s; }
+    #firework5  { left: 60%; top: 45%;  transform: scale(.4); }
+    #firework5  .explosion::before { animation-delay: .8s; }
+    #firework6  { left: 30%; top: 55%;  transform: scale(.4); }
+    #firework6  .explosion::before { animation-delay: .7s; }
+    #firework7  { left: 20%; top: 35%;  transform: scale(.4); }
+    #firework7  .explosion::before { animation-delay: 2s; }
+    #firework8  { left: 30%; top: 85%;  transform: scale(.4); }
+    #firework8  .explosion::before { animation-delay: 1s; }
+    #firework9  { left: 15%; top: 35%;  transform: scale(.4); }
+    #firework9  .explosion::before { animation-delay: 1.5s; }
+  </style>
+</head>
+<body class="relative overflow-hidden">
+  <div id="app" class="h-screen w-full">
+    <!-- EXPIRED CONTENT -->
+    <div v-if="isExpired">
+      <!-- fireworks -->
+      <template v-for="n in 9">
+        <div class="firework" :id="`firework${n}`">
+          <div v-for="i in 12" class="explosion"></div>
+        </div>
+      </template>
+      <!-- reveal name -->
+      <div class="h-screen w-full bg-tile">
+        <div class="flex justify-center items-center h-full text-blue-900 drop-shadow text-5xl md:text-9xl font-rubik">
+          {{ babyName }}
+        </div>
+      </div>
+    </div>
+
+    <!-- COUNTDOWN PREVIEW -->
+    <section v-else class="flex flex-col items-center">
+      <div class="mt-10 text-4xl md:text-6xl font-sevillana">Revelação</div>
+      <div class="mb-16 text-lg md:text-2xl text-gray-400 font-sevillana">
+        do bebêzinho de Juliana e Raphael
+      </div>
+      <div class="relative text-center italic text-gray-700 px-4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="hidden md:block absolute -ml-6 -mt-2" viewBox="0 0 16 16">
+            <path d="M12 12a1 1 0 0 0 1-1V8.558a1 1 0 0 0-1-1h-1.388c0-.351.021-.703.062-1.054.062-.372.166-.703.31-.992.145-.29.331-.517.559-.683.227-.186.516-.279.868-.279V3c-.579 0-1.085.124-1.52.372a3.322 3.322 0 0 0-1.085.992 4.92 4.92 0 0 0-.62 1.458A7.712 7.712 0 0 0 9 7.558V11a1 1 0 0 0 1 1h2Zm-6 0a1 1 0 0 0 1-1V8.558a1 1 0 0 0-1-1H4.612c0-.351.021-.703.062-1.054.062-.372.166-.703.31-.992.145-.29.331-.517.559-.683.227-.186.516-.279.868-.279V3c-.579 0-1.085.124-1.52.372a3.322 3.322 0 0 0-1.085.992 4.92 4.92 0 0 0-.62 1.458A7.712 7.712 0 0 0 3 7.558V11a1 1 0 0 0 1 1h2Z"/>
+        </svg>
+        Ensine seus filhos no caminho certo, e, mesmo quando envelhecerem, não se desviarão dele.
+        <div class="text-sm text-gray-600">Provérbios 22:6 NVT</div>
+      </div>
+      <div class="mt-16 text-2xl md:text-4xl font-sevillana">será</div>
+      <div class="my-5 text-5xl md:text-8xl font-cookie drop-shadow-lg">
+        <span class="text-blue-500">Eduardo</span>
+        ou
+        <span class="text-pink-500">Olivia</span>
+        <span class="ml-2 text-6xl">?</span>
+      </div>
+      <h4 class="mt-5 text-lg font-bold">Contagem Regressiva</h4>
+      <p class="my-3 text-sm md:text-md italic text-gray-500">
+        O sexo do bebê será revelado ao final da contagem
+      </p>
+      <p class="mb-3 text-sm italic text-gray-400">
+        em 21/05/2025 às 19:00h
+      </p>
+
+      <!-- countdown blocks -->
+      <section class="flex justify-center my-5 text-3xl sm:text-5xl md:text-7xl max-h-36">
+        <div v-if="days!=='00'" class="relative bg-gray-100 p-5 rounded-md shadow">
+          <span class="font-rubik">{{ days }}</span>
+          <div class="absolute w-full text-center -mt-6 text-sm text-gray-400">Dias</div>
+        </div>
+        <div v-if="days!=='00'" class="mx-4 md:mx-6 text-gray-400">:</div>
+        <div v-if="hours!=='00'" class="relative bg-gray-100 p-5 rounded-md shadow">
+          <span class="font-rubik">{{ hours }}</span>
+          <div class="absolute w-full text-center -mt-6 text-sm text-gray-400">Horas</div>
+        </div>
+        <div v-if="hours!=='00'" class="mx-4 md:mx-6 text-gray-400">:</div>
+        <div class="relative bg-gray-100 p-5 rounded-md shadow">
+          <span class="font-rubik">{{ minutes }}</span>
+          <div class="absolute w-full text-center -ml-5 text-sm text-gray-400">Minutos</div>
+        </div>
+        <div class="mx-4 md:mx-6 text-gray-400">:</div>
+        <div class="relative bg-gray-100 p-5 rounded-md shadow">
+          <span class="font-rubik">{{ seconds }}</span>
+          <div class="absolute w-full text-center -ml-5 text-sm text-gray-400">Segundos</div>
+        </div>
+      </section>
+    </section>
+  </div>
+
+  <!-- Vue 3 + Moment.js + Moment-TimeZone via CDN -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/min/moment.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/moment-timezone@0.5.33/builds/moment-timezone-with-data.min.js"></script>
+
+  <script>
+    moment.tz.setDefault('America/Sao_Paulo');
+
+    Vue.createApp({
+      data() {
+        return {
+          days:    '00',
+          hours:   '00',
+          minutes: '00',
+          seconds: '00',
+          isExpired: false,
+          babyName: 'Olívia',
+          revelDate: moment("2025-05-21 19:30:00")
+        }
+      },
+      mounted() {
+        this.checkExpired();
+        this.startTimer();
+      },
+      methods: {
+        checkExpired() {
+          this.isExpired = moment().isAfter(this.revelDate);
+        },
+        startTimer() {
+          const update = () => {
+            const now = moment();
+            if (now.isAfter(this.revelDate)) {
+              this.isExpired = true;
+              this.babyName = "Eduardo";
+              return;
+            }
+            const diff = moment.duration(this.revelDate.diff(now));
+            this.days    = this.pad(diff.days());
+            this.hours   = this.pad(diff.hours());
+            this.minutes = this.pad(diff.minutes());
+            this.seconds = this.pad(diff.seconds());
+          };
+          update();
+          setInterval(update, 1000);
+        },
+        pad(n) {
+          return n < 10 ? '0'+n : ''+n;
+        }
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>
